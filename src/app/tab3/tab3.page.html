@@ -1,9 +1,23 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-title>
-      Tab Three
+      Saved Listings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content color="primary">
+<ion-list>
+  <ion-item *ngFor="let listing of listings" color="primary">
+    Name: {{listing.name}}
+    <br>
+    Location: {{listing.location}}
+    <br>
+    Price: {{listing.price}}
+  </ion-item>
+</ion-list>
+
+  
+<ion-button (click)="navToExplore()" color="secondary" shape="round">Find Homes
+</ion-button>
+</ion-content>

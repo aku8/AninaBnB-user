@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Inbox</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+  <ion-card>
+    <ion-item *ngFor="let message of messages" color="primary">
+        <b>Sender:</b> {{message.sender}}
+        <br>
+        <b>Message:</b> {{message.message}}
+        <br>
+    </ion-item>
+  </ion-card>
+</ion-content>
