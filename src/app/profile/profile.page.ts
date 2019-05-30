@@ -19,7 +19,7 @@ export class ProfilePage implements OnInit {
     review2.writer = "Leah Wang";
     review2.review = "Amazing vacation!";
     this.reviews.push(review2);
-   }
+  }
 
   ngOnInit() {
   }

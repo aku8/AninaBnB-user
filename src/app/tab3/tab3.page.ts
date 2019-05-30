@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController} from '@ionic/angular';
 import { listing } from '../models';
+import { PropertyService } from '../services/property.service';
 
   @Component({
   selector: 'app-tab3',
@@ -13,28 +14,33 @@ export class Tab3Page {
 
   public listings: Array<listing> = new Array();
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController,
+    private propertyService: PropertyService) {
   
-    let listing1 = new listing();
-    listing1.name = "Lovely condo";
-    listing1.location = "Lisbon, PT";
-    listing1.price = 120;
-    listing1.preview = "http://luxpropertyportugal.com/wp-content/uploads/2014/10/Captura-de-ecra%CC%83-2014-10-16-a%CC%80s-11.32.18-284x284.jpg"
-    this.listings.push(listing1)
-
-    let listing2 = new listing();
-    listing2.name = "Giant mansion"
-    listing2.location = "Cancun, MX";
-    listing2.price = 1000
-    listing2.preview = "https://i.pinimg.com/originals/3c/c0/64/3cc064c16e1e7b39a16130285d3bcfe8.jpg"
-    this.listings.push(listing2)
+    this.propertyService.getAllListings();
+    this.listings = this.propertyService.listings;
   }
   navToExplore(){
     this.navCtrl.navigateForward("tab/tabs/tab1");
+  }
 
-;
+  navToListing(listing: listing){
+    this.navCtrl 
+      .navigateForward("rental-details", {
+        queryParams: {
+          q: "ionic",
+          listingName: listing.name,
+          listingId: listing.id
+
+        }
+      });
+  }
+
+
+
+
 
 
 
 }
-}
+

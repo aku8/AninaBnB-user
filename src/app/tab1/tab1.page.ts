@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { listing } from '../models';
+import { PropertyService } from '../services/property.service';
 
 @Component({
   selector: 'app-tab1',
@@ -6,6 +9,21 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  constructor() {}
+  public listings: Array<listing> = [];
+  constructor(private navCtrl: NavController, private propertyService: PropertyService) {
 
+    this.propertyService.getAllListings();
+    this.listings = this.propertyService.listings;
+  }
+  navToListing(listings: listing) {
+    this.navCtrl
+      .navigateForward("rental-details", {
+        queryParams: {
+          q: "ionic",
+          listingName: listings.name,
+          listingId: listings.id
+
+        }
+      });
+  }
 }
