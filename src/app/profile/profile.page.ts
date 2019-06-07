@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { review } from '../models/review.model';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { UseExistingWebDriver } from 'protractor/built/driverProviders';
+import { User } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -8,20 +11,42 @@ import { review } from '../models/review.model';
 })
 export class ProfilePage implements OnInit {
 
-  public reviews: Array<review> = new Array();
-  constructor() {
-    let review1 = new review();
-    review1.writer = "Alicia Byrne";
-    review1.review = "Had a great stay! Thanks!";
-    this.reviews.push(review1);
+  public user: User = new User();
 
-    let review2 = new review();
-    review2.writer = "Leah Wang";
-    review2.review = "Amazing vacation!";
-    this.reviews.push(review2);
-  }
+
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {
+
+
+   }
 
   ngOnInit() {
+    const userId = localStorage.getItem("user_id");
+    console.log("PROFILE USER ID: ", userId);
+    this.activatedRoute.queryParamMap.subscribe(
+      (parameters: ParamMap) => {
+        console.log(parameters);
+
+        //pulls from url 
+        // const userId = (parameters.get("user_id"));
+
+        //execute http client - get the user from the database given an id
+        // this.http.get("http://localhost:4000/users/" + userId);
+        //or: this.http.get(`http://localhost:4000/users/${userId}`);
+
+        this.http.get("http://localhost:4000/users/" + userId).subscribe((response: User) => {
+          console.log(response);
+          console.log(userId);
+
+          //response will be an object (User) 
+          //so we could call response.name, response.email, etc. 
+          this.user.firstname = response.firstname;
+          this.user.email = response.email;
+          this.user.id = response.id;
+      });
+        //express:
+        //app.get("/users/:id")
+      }
+    );
   }
 
 }

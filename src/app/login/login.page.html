@@ -14,14 +14,18 @@
         <ion-card-title>Welcome to AninaBnB</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Start the trip of your dreams by logging in below.</p>
+        <p>Start your trip by logging in below.</p>
       </ion-card-content>
     </ion-card>
     <ion-card>
-    <ion-input type="email" placeholder=" Email" required=true></ion-input>
-    <ion-input type="password" placeholder=" Password" required=true></ion-input>
+<ion-item>
+    <ion-input [(ngModel)]="email" type="email" placeholder=" Email" required=true></ion-input>
+  </ion-item>
 
-    <ion-button shape="round" (click)="navToExplore()" color="secondary">
+  <ion-item>
+    <ion-input [(ngModel)]="password"type="password" placeholder=" Password" required=true></ion-input>
+  </ion-item>
+    <ion-button shape="round" (click)="login()" color="secondary">
       <ion-icon slot="start" name="star"></ion-icon>
       Log In
     </ion-button>

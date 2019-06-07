@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { NavController} from '@ionic/angular';
 
 @Component({
@@ -8,8 +9,38 @@ import { NavController} from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private navCtrl: NavController) { }
+  public email: string = "";
+  public password: string = "";
 
+  constructor(private httpClient: HttpClient, private navCtrl: NavController) { }
+
+  login() {
+    const authReq = {
+      email: this.email,
+      password: this.password
+    };
+
+    console.log("Checking with server...");
+
+    this.httpClient.post("http://localhost:4000/users/authentication", authReq).subscribe(
+      (response: any) => { //response is the user object
+        const userId = response.id;
+
+        //STORING
+        localStorage.setItem("user_id", userId);
+        
+        this.navCtrl.navigateForward("tab/tabs/tab2", {
+          queryParams: {
+            user_id: userId
+          }
+        });
+      },
+      (err) => {
+        console.log(err);
+        alert("Invalid login. Please check and try again!");
+      }
+    )
+  }
   ngOnInit() {
   }
   navToExplore(){

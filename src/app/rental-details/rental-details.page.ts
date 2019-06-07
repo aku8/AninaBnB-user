@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { listing } from '../models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { PropertyService } from '../services/property.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-rental-details',
@@ -11,26 +12,51 @@ import { PropertyService } from '../services/property.service';
 })
 export class RentalDetailsPage implements OnInit {
 
-  public nameOfListing: string;
-  public listingId: number;
-  public currentListing: listing;
+  public listing: listing = new listing();
+
+
+  // public nameOfListing: string;
+
+  // public currentListing: listing;
 
   constructor( private activatedRoute: ActivatedRoute, private NavCtrl: NavController, 
-    private propertyService: PropertyService) {
+    private propertyService: PropertyService, private httpClient: HttpClient) {
 
    }
 
   ngOnInit() {
-    let arrow = (data:any) => {
-      this.nameOfListing = data.params.listingName;
-      this.listingId = data.params.listingId;
-      this.currentListing = this.propertyService.findListingById(this.listingId);
-
-    };
-
+    
     this.activatedRoute.queryParamMap.subscribe(
-      arrow);
-    }
+      (parameters: ParamMap) => {
+        console.log(parameters);
+        const listing_id = (parameters.get("listing_id"));
+
+    this.httpClient.get("http://localhost:4000/listings/" + listing_id).subscribe((response: listing) => {
+      console.log(response[0]);
+      console.log(listing_id);
+  
+      //response will be an object (User) 
+      //so we could call response.name, response.email, etc. 
+      this.listing.name = response[0].name;
+      this.listing.location = response[0].location;
+      this.listing.price = response[0].price;
+      this.listing.imageUrl = response[0].imageUrl;
+      this.listing.id = response[0].id;
+
+    });
+  });
+}
+
+    // let arrow = (data:any) => {
+    //   this.nameOfListing = data.params.listingName;
+    //   this.listingId = data.params.listingId;
+    //   this.currentListing = this.propertyService.findListingById(this.listingId);
+
+    // };
+
+    // this.activatedRoute.queryParamMap.subscribe(
+    //   arrow);
+
 
   //  this.listings.forEach(
     //  (listing: listing) => {
@@ -44,6 +70,8 @@ export class RentalDetailsPage implements OnInit {
   navToRentalDetails(){
     this.NavCtrl.navigateBack("tab/tabs/tab3");
   }
+
+
 }
 
 

@@ -11,11 +11,11 @@
     <ion-list>
       <ion-item *ngFor="let listing of listings" color="primary" (click)="navToListing(listing)">
         <ion-label>
-          Name: {{listing.name}}
+          {{listing.name}}
           <br>
-          Location: {{listing.location}}
+          Located in {{listing.location}}
           <br>
-          Price: {{listing.price}}
+          ${{listing.price}} per night
         </ion-label>
         <ion-thumbnail>
           <ion-img src={{listing.preview}}></ion-img>
@@ -24,8 +24,6 @@
       </ion-item>
     </ion-list>
   </ion-card>
-
-
 
   <ion-button (click)="navToExplore()" color="secondary" shape="round">Find Homes
   </ion-button>

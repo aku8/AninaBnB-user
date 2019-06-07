@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-back-button></ion-back-button>
-    <ion-title *ngIf="currentListing">
-      {{currentListing.name}}
+    <ion-title>
+      {{listing.name}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,13 +11,14 @@
   <ion-card>
     Here are the details for your saved listing:
     <br>
-    <ion-text *ngIf="currentListing">
-      Location: {{currentListing.location}}
+    <ion-text>
+      Location: {{listing.location}}
       <br>
-      Price: {{currentListing.price}} per night
+      Price: {{listing.price}} per night
     </ion-text>
 
   </ion-card>
-  <ion-img src={{currentListing.preview}}></ion-img>
-
+  <ion-card>
+    <ion-img src={{listing.imageUrl}}></ion-img>
+  </ion-card>
 </ion-content>

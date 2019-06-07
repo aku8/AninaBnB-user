@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { message } from '../models/message.model';
+import { NavController } from '@ionic/angular';
+import { MessageService } from '../services/message.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-inbox',
@@ -9,19 +12,26 @@ import { message } from '../models/message.model';
 export class InboxPage implements OnInit {
 
   public messages: Array <message> = new Array();
-  constructor() {
-    let message1 = new message();
-    message1.sender = "Leah Wang";
-    message1.message = "How can I help you?";
-    this.messages.push(message1);
 
-    let message2 = new message();
-    message2.sender = "Jen Mashaal";
-    message2.message = "What dates were you looking at?";
-    this.messages.push(message2);
+  constructor(private navCtrl: NavController, private messageService: MessageService) {
+    this.messageService.getMessages();
+    this.messages = this.messageService.messages;
+
    }
 
   ngOnInit() {
   }
+  navToMessage(message: message){
+    console.log(message);
+    this.navCtrl 
+      .navigateForward('messages', {
+        queryParams: {
+          messageSender: message.sender,
+          messageId: message.id
 
-}
+        }
+      });
+    }
+  }
+
+
