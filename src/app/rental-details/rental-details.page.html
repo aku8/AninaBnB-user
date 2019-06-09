@@ -21,4 +21,18 @@
   <ion-card>
     <ion-img src={{listing.imageUrl}}></ion-img>
   </ion-card>
+
+
+  <ion-item>
+    <ion-label>Start Date:</ion-label>
+    <ion-input [(ngModel)]="booking.startDate" type="Date"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>End Date:</ion-label>
+    <ion-input [(ngModel)]="booking.endDate" type="Date"></ion-input>
+  </ion-item>
+
+    <ion-button color="secondary" shape="round" (click)="bookListing()">Book Now</ion-button>
+
 </ion-content>

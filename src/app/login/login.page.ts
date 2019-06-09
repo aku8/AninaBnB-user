@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
         //STORING
         localStorage.setItem("user_id", userId);
         
-        this.navCtrl.navigateForward("tab/tabs/tab2", {
+        this.navCtrl.navigateForward("tab/tabs/tab1", {
           queryParams: {
             user_id: userId
           }
@@ -44,6 +44,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
   navToExplore(){
+    
     this.navCtrl.navigateForward("tab/tabs/tab1");
   }
   navToRegister(){
